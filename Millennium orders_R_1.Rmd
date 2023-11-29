@@ -1,0 +1,64 @@
+
+---
+title: "Millennium orders_R_1"
+output:
+  html_document:
+    toc: true
+---
+
+
+```{r}
+# 10/24/2023: start the spark session with Hive support to enable HiveQL
+library(SparkR)
+sparkR.session(enableHiveSupport = TRUE)
+```
+
+
+```{r}
+# 10/24/2023: get path for SQL table from the "location" field
+display(sql("DESCRIBE DETAIL cern_order_provsample"))
+```
+
+
+```{r}
+# 10/24/2023: install a couple of packages. Packages install local to notebook.
+install.packages("sparklyr")
+install.packages("tidyverse")
+
+library(sparklyr)
+library(tidyverse)
+```
+
+
+```{r}
+# 10/24/2023: load data from the source table
+ord_df = read.df(path = "dbfs:/user/hive/warehouse/cern_order_provsample")
+```
+
+
+```{r}
+# 10/24/2023: the hive table is now a data frame
+printSchema(ord_df)
+showDF(ord_df)
+```
+
+
+```{r}
+display(ord_df)
+```
+
+
+```{r}
+str(ord_df)
+```
+
+
+```{r}
+head(ord_df)
+```
+
+
+```{r}
+dput(names(ord_df))
+```
+
